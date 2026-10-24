@@ -75,7 +75,7 @@ const handleHeaderOnScroll = () => {
     }else {
         siteHeader.classList.remove("is-scrolled");
     }
-};
+}; // is-scrolled is in the css file
 // ----- event listeners -------
 // 1) set year on page load
 setCurrentYear();
