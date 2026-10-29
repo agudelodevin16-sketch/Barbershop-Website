@@ -83,6 +83,19 @@ transition: background-color 0.2s ease, color 0.2s ease;
 background-color: rgba(216, 195, 165, 0.12);
 color: var(--color-text-light);
 }
+/* sticky navbar visual change on scroll */
+.site-header {
+    transition: padding 0.2s ease, boreder-radius 0.2s ease, width 0.2s ease, margin 0.2s ease;
+}
+/* when scrolled, we "float" hte header with round corners */
+.site-header.is-scrolled {
+    width: calc(100% - 24px);
+    margin: 12px auto 0 auto;
+    border-radius: 18px;
+    padding: 2px 0;
+}
+
+
 /* Mobile button hidden on desktop */
 .menu-btn {
 display: none;

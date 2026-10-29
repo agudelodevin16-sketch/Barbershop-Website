@@ -10,6 +10,27 @@ const ctaBtn = document.getElementById("ctaBtn");
 const callBtn = document.getElementById("callBtn");
 const phoneLink = document.getElementById("phoneLink");
 const heading = document.getElementById("heroHeading");
+const featureGrid = document.getElementById("featureGrid");
+const nav = document.getElementById("nav");
+const siteHeader = document.querySelector(".site-header");
+// ----- services data (array objects) ------
+const services = [
+    {
+        title: "Classic Haircut",
+        text: "Timeless cuts with modern precision tailored to your style.",
+        image: "assets/images/feature-1.jpg"
+    },
+    {
+        title: "Beard trim",
+        text: "Shape and line-up your beard for a clean, sharp finish.",
+        image: "assets/images/feature-2.jpg"
+    },
+    {
+        title: "Staright Razor Shave",
+        text: "Hot towel treatment with smooth traditional shave.",
+        image: "assets/images/feature-3.jpg"
+    }
+];
 // ------ helper / functions -----------
 // update footer year automatically
 const setCurrentYear = () => {
@@ -45,6 +66,16 @@ const updateHeadingText = (newText) => {
     if (!heading) return; 
     heading.textContent = newText;
 };
+// adds the is-scrolled class to the site-header DOM element
+const handleHeaderOnScroll = () => {
+    if (!siteHeader) return;
+    if (window.scrollY > 10) {
+        siteHeader.classList.add("is-scrolled");
+
+    }else {
+        siteHeader.classList.remove("is-scrolled");
+    }
+}; // is-scrolled is in the css file
 // ----- event listeners -------
 // 1) set year on page load
 setCurrentYear();
@@ -81,3 +112,86 @@ callBtn.addEventListener("click", () => {
     }
 });
 }
+// 6) runds naavbar and makes sticky 
+window.addEventListener("scroll", handleHeaderOnScroll);
+// run once on page load in case user refreshers mid-scroll
+handleHeaderOnScroll();
+
+// render features using forEach ------
+const renderFeatures = () => {
+    if (!featureGrid) return;
+    services.forEach(service => {
+        const card = document.createElement("article");
+        card.classList.add("feature-card");
+        card.innerHTML = `
+        <img src="${service.image}" alt="${service.title}" class="feature-img"
+        />
+        <h3 class="feature-title">${service.title}</h3>
+        <p class="feature-text">${service.text}</p>
+        `; // template literals uses the `${}` and allows us to tostructure how we want our data returned
+        featureGrid.appendChild(card);
+    });
+};
+const renderFeauresMap = () => {
+    const cardsHTML = services.map(service => {
+        return `
+        <article class="feature-card">
+        <img src="${service.image}" alt="${service.title}" class="feature-img" />
+        <h3 class="feature-title">${service.text}</p>
+        </article>
+        `
+    }).join("");
+    featureGrid.innerHTML = cardsHTML;
+};
+
+// --- render navigation using map() -----
+const renderNavigation = () => {
+    // desktop nav
+    if (nav) {
+        const navHTML = navLinks.map(linl => {
+            return `
+            <a href="${link.href}" class="nav-link">${link.label}</a>
+            `}).join("");
+            nav.innerHTML = navHTML;
+    };
+    // mobile nav
+    if (mobileMenu) {
+        const MobileHTML = navLinks.map(link => {
+        return `
+        <a href="${link.href} class="mobile-link">${link.label}</a>
+        `}).join("");
+        mobileMenu.innerHTML = MobileHTML;
+    };
+};
+            
+        
+
+// array.map()
+// -> returns HTML
+// -> join("")
+// -> insert into DOM
+// our navagation now:
+// comes from data
+// updates instantly if the array changes 
+// works in desktop + mobile
+// uses modern JS patterns 
+
+// This: navLinks.map(link =>....)
+// is basically: 
+// {navLinks.map(link =>....)} in React
+
+// skill              concept 
+//objects array       data structure
+// map()              tarnsform data
+// template literals  dynamic HTML
+// DOM reading        UI regeneration
+
+
+// ------ function calls ------
+// renderFeatures();
+renderFeauresMap();
+renderNavigation();
+// key teaching difference
+// method                what happens
+// forEach()             build element manually 
+// map()                 returns HTML string
